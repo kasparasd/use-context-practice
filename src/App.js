@@ -1,25 +1,34 @@
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HomePage } from './pages/HomePage';
+import {NoPage} from './pages/NoPage';
+import { PublicLayout } from './layout/PublicLayout';
+import { LoginPage } from './pages/LoginPage';
+import { LogOutPage } from './pages/LogOutPage';
+import { AccountPage } from './pages/AccountPage';
+import { ContextWrapper } from './context/GlobalContext';
+import { LogInLayout } from './layout/LogInLayout';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+    <ContextWrapper>
+        <BrowserRouter>
+        <Routes>
+          <Route Component={PublicLayout}>
+            <Route index path='/' element={<HomePage />} />
+            <Route path='/logout' element={<LogOutPage />} />
+            <Route path='/account' element={<AccountPage />} />
+            <Route path='*' element={<NoPage/>} />
+          </Route>
+            <Route Component={LogInLayout}>
+            <Route path='/login' element={<LoginPage />} />
+            </Route>
+        </Routes>
+      </BrowserRouter>
+    </ContextWrapper>
+</>)
 }
 
 export default App;
+
